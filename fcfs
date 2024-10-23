@@ -1,20 +1,17 @@
 #include <iostream>
 using namespace std;
 
-int main() {
-    //data
-   int at[3]= {1,2,3};
-   int bt[3]= {2,6,3};
-   int tat[3]={};
-   int wt[3] ={};
+void fcfs( int at[], int bt[], int size){
+    int tat[3]={};
+    int wt[3] ={};
    // ct use
    int count =1;
    int ct[3]= {};
    double awt=0;
    double atat=0;
    
-   //size of array bt
-   int size = sizeof(bt)/sizeof(bt[0]);
+  
+  
    cout<<"FCFS"<<endl;
    cout<<endl;
    cout<<"PS  AT  BT  TAT  WT  CT"<<endl;
@@ -41,5 +38,14 @@ int main() {
    cout<<endl;
    cout<<"Average wating time : "<<awt/size<<endl;
    cout<<"Average turnaround time  : "<<atat/size<<endl;
+}
+
+int main() {
+    //data
+   int at[3]= {1,2,3};
+   int bt[3]= {2,6,3};
+   int size = sizeof(bt)/sizeof(bt[0]);
+   fcfs(at,bt,size);
+   
     return 0;
 }
