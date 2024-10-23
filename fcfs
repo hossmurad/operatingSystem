@@ -2,11 +2,11 @@
 using namespace std;
 
 void fcfs( int at[], int bt[], int size){
-    int tat[3]={};
-    int wt[3] ={};
+    int tat[size]={};
+    int wt[size] ={};
    // ct use
-   int count =1;
-   int ct[3]= {};
+   int count =at[0];
+   int ct[size]= {};
    double awt=0;
    double atat=0;
    
