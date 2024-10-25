@@ -1,0 +1,91 @@
+#include <iostream>
+using namespace std;
+
+void sjf(int at[], int bt[], int index[], int size) {
+    int countZero=0;
+    for(int i =0; i<size;i++){
+        if(i == 0){
+            countZero++;
+        }
+    }
+    int tat[size] = {};
+    int wt[size] = {};
+    int count = 0;
+    int ct[size] = {};
+    double awt = 0;
+    double atat = 0;
+    cout << endl;
+    cout << "      --SJF--" << endl;
+    cout << endl;
+    cout << "PS  AT  BT  TAT  WT  CT" << endl;
+
+    for (int i = 0; i < size; i++) {
+        count = count+ bt[i];
+        ct[i] = count;
+        tat[i] = ct[i] - at[i];
+        wt[i] = tat[i] - bt[i];
+        
+        cout << "P" << index[i]+1 << "   " << at[i] << "   " << bt[i] << "   " << tat[i] << "   " << wt[i] << "   " << ct[i] << endl;
+    }
+
+    for (int i : wt) {
+        awt += i;
+    }
+    for (int i : tat) {
+        atat += i;
+    }
+    cout << "----------------------------------" << endl;
+    cout << endl;
+    cout << "Average waiting time : " << awt / (size-countZero) << endl;
+    cout << "Average turnaround time  : " << atat / (size-countZero) << endl;
+}
+
+void insertionSort(int bt[], int index[], int at[], int size) {
+    for (int i = 1; i < size; i++) {
+        int temp = bt[i];
+        int tempIndex = index[i];
+        int tempAt =at[i];
+        int j = i - 1;
+        while (j >= 0 && (bt[j] > temp || (bt[j] == temp && at[j] > tempAt))) {
+            bt[j + 1] =bt[j];
+            index[j + 1] = index[j];
+            at[j + 1] = at[j];
+            j--;
+        }
+        bt[j + 1] = temp;
+        index[j + 1] = tempIndex;
+        at[j + 1] =tempAt;
+    }
+}
+
+int main() {
+    int size;
+    
+    cout << "Enter total Process number  : ";
+    cin >> size;
+    cout << "----------------------------------" << endl;
+    int at[size];
+    int bt[size];
+    int index[size];
+    
+    for (int i = 0; i < size; i++) {
+        cout << "Enter arrival time for P" << i + 1 << " : ";
+        cin >> at[i];
+    }
+    cout << "----------------------------------" << endl;
+    
+    for (int i = 0; i < size; i++) {
+        cout << "Enter burst time for P" << i + 1 << " : ";
+        cin >> bt[i];
+    }
+    cout << "----------------------------------" << endl;
+
+    for (int i = 0; i < size; i++) {
+        index[i] = i;
+    }
+    
+    insertionSort(bt, index, at, size);
+    sjf(at, bt, index, size);
+    
+    return 0;
+}
