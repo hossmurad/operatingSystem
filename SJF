@@ -14,15 +14,7 @@ void sjf(int at[], int bt[], int index[], int size) {
     cout << "PS  AT  BT  TAT  WT  CT" << endl;
 
     for (int i = 0; i < size; i++) {
-        if (i == 0) {
-            count = at[i] + bt[i];
-        } else {
-            if (count < at[i]) {
-                count = at[i] + bt[i];
-            } else {
-                count += bt[i];
-            }
-        }
+        count = count+ bt[i];
         ct[i] = count;
         tat[i] = ct[i] - at[i];
         wt[i] = tat[i] - bt[i];
