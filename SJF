@@ -40,7 +40,7 @@ void insertionSort(int bt[], int index[], int at[], int size) {
         int tempIndex = index[i];
         int tempAt =at[i];
         int j = i - 1;
-        while (j >= 0 && (bt[j] > temp || (bt[j] == temp && at[j] > tempAt))) {
+        while (j >= 0 && (bt[j] > temp)) {
             bt[j + 1] =bt[j];
             index[j + 1] = index[j];
             at[j + 1] = at[j];
