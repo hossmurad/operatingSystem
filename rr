@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <math.h>
+
+#define SIZE 5
+
+struct op_sys {
+    int BT[SIZE];
+    int BTT[SIZE];
+    int CT[SIZE];
+    int AT[SIZE];
+    int TAT[SIZE];
+    int WT[SIZE];
+    int t_q;
+};
+
+int main() {
+    struct op_sys abc;
+
+    printf("Enter time quantum: ");
+    scanf("%d", &abc.t_q);
+
+    printf("Enter burst time [5]: ");
+    for (int i = 0; i < SIZE; i++) {
+        abc.AT[i] = 0;
+        scanf("%d", &abc.BT[i]);
+        abc.BTT[i] = abc.BT[i];
+    }
+
+    float max = abc.BT[0];
+    for (int i = 1; i < SIZE; i++) {
+        if (max < abc.BT[i]) {
+            max = abc.BT[i];
+        }
+    }
+
+    int iteration = ceil(max / abc.t_q);
+    int maxx = 0;
+    for (int i = 0; i < iteration; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (abc.BTT[j] > abc.t_q) {
+                abc.BTT[j] -= abc.t_q;
+                maxx += abc.t_q;
+                abc.CT[j] = maxx;
+            } else {
+                maxx += abc.BTT[j];
+                if (abc.BTT[j] != 0) {
+                    abc.CT[j] = maxx;
+                }
+                abc.BTT[j] = 0;
+            }
+        }
+    }
+
+    for (int i = 0; i < SIZE; i++) {
+        abc.TAT[i] = abc.CT[i] - abc.AT[i];
+        abc.WT[i] = abc.TAT[i] - abc.BT[i];
+    }
+
+    printf("P   AT   BT   TAT   WT   CT\n");
+    float totalWT = 0, totalTAT = 0;
+    for (int i = 0; i < SIZE; i++) {
+        printf("P%d  %d   %d   %d    %d    %d\n", i + 1, abc.AT[i], abc.BT[i], abc.TAT[i], abc.WT[i], abc.CT[i]);
+        totalWT += abc.WT[i];
+        totalTAT += abc.TAT[i];
+    }
+
+    float avgWT = totalWT / SIZE;
+    float avgTAT = totalTAT / SIZE;
+
+    printf("\nAverage Waiting Time: %.2f\n", avgWT);
+    printf("Average Turnaround Time: %.2f\n", avgTAT);
+
+    return 0;
+}
