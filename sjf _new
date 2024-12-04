@@ -1,0 +1,87 @@
+#include <iostream>
+using namespace std;
+
+void sjf(int at[], int bt[], int index[], int size) {
+    int tat[size] = {};
+    int wt[size] = {};
+    int ct[size] = {};
+    int count = at[0];
+    double awt = 0;
+    double atat = 0;
+
+    cout << "SJF (Non-preemptive)" << endl;
+    cout << endl;
+    cout << "PS  AT  BT  TAT  WT  CT" << endl;
+
+    for (int i = 0; i < size; i++) {
+        if (count < at[i]) {
+            count = at[i];
+        }
+        count += bt[i];
+        ct[i] = count;
+        tat[i] = ct[i] - at[i];
+        wt[i] = tat[i] - bt[i];
+
+        cout << "P" << index[i] << "   " << at[i] << "   " << bt[i] 
+             << "   " << tat[i] << "   " << wt[i] << "    " << ct[i] << endl;
+    }
+
+    for (int i : wt) {
+        awt += i;
+    }
+
+    for (int i : tat) {
+        atat += i;
+    }
+
+    cout << endl;
+    cout << "Average waiting time : " << awt / size << endl;
+    cout << "Average turnaround time  : " << atat / size << endl;
+}
+
+void bubbleSort(int at[], int bt[], int index[], int size) {
+    for (int i = 0; i < size; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (bt[i] > bt[j] || (bt[i] == bt[j] && at[i] > at[j])) {
+                int temp_bt = bt[i];
+                bt[i] = bt[j];
+                bt[j] = temp_bt;
+
+                int temp_at = at[i];
+                at[i] = at[j];
+                at[j] = temp_at;
+
+                int temp_index = index[i];
+                index[i] = index[j];
+                index[j] = temp_index;
+            }
+        }
+    }
+}
+
+int main() {
+    cout<<"enter size : ";
+    int size ;
+    cin>>size;
+    
+    int at[size] ;
+    int bt[size] ;
+    int index[size];
+     cout<<"enter at: ";
+    for(int i =0;i<size;i++){
+        cin>>at[i];
+    }
+     cout<<"enter bt: ";
+    for(int i =0;i<size;i++){
+        cin>>bt[i];
+    }
+     
+    for(int i =0;i<size;i++){
+       index[i] = i+1;
+    }
+
+    bubbleSort(at, bt, index, size);
+    sjf(at, bt, index, size);
+
+    return 0;
+}
